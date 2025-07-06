@@ -21,7 +21,7 @@ fun BottomNavBar(navController: NavController) {
     val items = listOf(
         BottomNavItem("Home", Icons.Default.Home, "main_menu"),
         BottomNavItem("Maintain", Icons.Default.Build, "maintain"),
-        BottomNavItem("Water", Icons.Default.Person, "water"),
+        BottomNavItem("Water", Icons.Default.Person, "water_health"),
         BottomNavItem("Power", Icons.Default.Bolt, "power"),
         BottomNavItem("Settings", Icons.Default.Settings, "settings")
     )
