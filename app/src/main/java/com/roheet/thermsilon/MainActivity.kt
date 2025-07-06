@@ -83,7 +83,7 @@ fun ThermsilonApp() {
         }
 
         // Water Health Screen
-        composable("water") {
+        composable("water_health") {
             WaterHealthScreen(navController = navController)
         }
 
