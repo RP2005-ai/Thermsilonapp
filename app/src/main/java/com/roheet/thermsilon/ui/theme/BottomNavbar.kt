@@ -21,7 +21,7 @@ fun BottomNavBar(navController: NavController) {
     val items = listOf(
         BottomNavItem("Home", Icons.Default.Home, "main_menu"),
         BottomNavItem("Maintain", Icons.Default.Build, "maintain"),
-        BottomNavItem("Water", Icons.Default.Person, "water_health"),
+        BottomNavItem("Water", Icons.Default.WaterDrop, "water_health"), // Fixed icon and route
         BottomNavItem("Power", Icons.Default.Bolt, "power"),
         BottomNavItem("Settings", Icons.Default.Settings, "settings")
     )
@@ -40,8 +40,12 @@ fun BottomNavBar(navController: NavController) {
                 onClick = {
                     if (!isSelected) {
                         navController.navigate(item.route) {
-                            popUpTo("main_menu") { inclusive = false }
+                            // Clear back stack to avoid building up navigation history
+                            popUpTo(navController.graph.startDestinationId) {
+                                saveState = true
+                            }
                             launchSingleTop = true
+                            restoreState = true
                         }
                     }
                 },
@@ -57,7 +61,14 @@ fun BottomNavBar(navController: NavController) {
                         text = item.label,
                         color = if (isSelected) Color.Cyan else Color.White
                     )
-                }
+                },
+                colors = NavigationBarItemDefaults.colors(
+                    selectedIconColor = Color.Cyan,
+                    selectedTextColor = Color.Cyan,
+                    unselectedIconColor = Color.White,
+                    unselectedTextColor = Color.White,
+                    indicatorColor = Color.Transparent
+                )
             )
         }
     }
