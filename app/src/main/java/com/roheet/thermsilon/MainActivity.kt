@@ -13,12 +13,16 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import androidx.navigation.navArgument
-import com.roheet.thermsilon.ui.theme.*
-import com.roheet.thermsilon.ui.screens.DispenseScreen
-import com.jakewharton.threetenabp.AndroidThreeTen
-import com.roheet.thermsilon.ui.screens.SettingsScreen
-
+import com.roheet.thermsilon.ui.theme.MainMenuScreen
+import com.roheet.thermsilon.ui.theme.MaintenanceScreen
+import com.roheet.thermsilon.ui.theme.ThermsilonTheme
+import com.roheet.thermsilon.ui.theme.SplashScreen // Import the new Splash Screen
+import com.roheet.thermsilon.ui.theme.AuthScreen // Import the new Auth Screen
+import com.roheet.thermsilon.ui.theme.WaterHealthScreen // Assuming you have this screen
+import com.roheet.thermsilon.ui.theme.PowerScreen // Assuming you have this screen
+import com.roheet.thermsilon.ui.theme.SettingsScreen // Assuming you have this screen
+import com.roheet.thermsilon.ui.theme.BottomNavBar // Add this import
+import com.jakewharton.threetenabp.AndroidThreeTen // Import for AndroidThreeTen
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -60,51 +64,38 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun ThermsilonApp() {
     val navController = rememberNavController()
+    // Set splash_screen as the initial destination
     NavHost(navController = navController, startDestination = "splash_screen") {
-
-        // Splash Screen: shown first
+        // Splash Screen: First screen shown, navigates to auth_screen after a delay
         composable("splash_screen") {
             SplashScreen(navController = navController)
         }
-
-        // Authentication Screen
+        // Authentication Screen: Handles phone number and OTP, navigates to main_menu upon success
         composable("auth_screen") {
             AuthScreen(navController = navController)
         }
-
-        // Main Menu Screen
+        // Main Menu Screen: Your primary application interface
         composable("main_menu") {
             MainMenuScreen(navController = navController)
         }
-
-        // Maintenance Screen
+        // Maintenance Screen: For filter status, auto-clean, etc.
         composable("maintain") {
             MaintenanceScreen(navController = navController)
         }
-
-        // Water Health Screen
+        // Water Health Screen: (Assuming this exists based on your previous code)
         composable("water_health") {
-            WaterHealthScreen(navController = navController)
+            WaterHealthScreen(navController)
         }
-
-        // Power Screen
+        // Power Screen: (Assuming this exists based on your previous code)
         composable("power") {
             PowerScreen(navController = navController)
         }
-
-        // Settings Screen
+        // Settings Screen: (Assuming this exists based on your previous code)
         composable("settings") {
             SettingsScreen(navController = navController)
         }
-
-
-        // Dispense Screen (shared for all water modes)
-        composable(
-            route = "dispense/{mode}",
-            arguments = listOf(navArgument("mode") { defaultValue = "Any" })
-        ) { backStackEntry ->
-            val mode = backStackEntry.arguments?.getString("mode") ?: "Any"
-            DispenseScreen(mode = mode, navController = navController)
-        }
+        // Add other destinations here as needed
+        // For example, if "water_modes" is a separate screen:
+        // composable("water_modes") { WaterModesScreen(navController = navController) }
     }
 }
